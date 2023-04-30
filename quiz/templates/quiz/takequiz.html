@@ -1,0 +1,41 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <link rel="stylesheet" type="text/css" href="{% static 'css/takequiz.css' %}">
+    {% load bootstrap5 %}
+    {% bootstrap_css %}
+    {% bootstrap_javascript %}
+</head>
+<body>
+    <form id="my-form" method="post" action="{% url 'result' %}">
+        {% csrf_token %}
+        {% for question in questions_list %}
+    <div class="container mt-sm-5 my-1">
+        <div class="question ml-sm-5 pl-sm-5 pt-2">
+            <div class="py-2 h5"><b>Q.{{forloop.counter}} {{question.question_text}}</b></div>
+            <div class="ml-md-3 ml-sm-3 pl-md-5 pt-sm-0 pt-3" id="options">
+                <label class="options">Yes
+                    <input type="radio" name="answer_{{ question.id }}" value="Yes">
+                    <span class="checkmark"></span>
+                </label>
+                <label class="options">No
+                    <input type="radio" name="answer_{{ question.id }}" value="No">
+                    <span class="checkmark"></span>
+                </label>
+            </div>
+        </div>
+    </div>
+    {% endfor %}
+    </form>
+        <div class="d-flex justify-content-center mt-5">
+            <div class="ml-auto mr-sm-5">
+                <button form="my-form" class="btn btn-success" type="submit">Submit Quiz</button>
+            </div>
+        </div>
+</body>
+</html>
